@@ -75,6 +75,11 @@ def update_queue_attributes():
         }
     )
 
+def delete_queue():
+    return sqs_client().delete_queue(
+        QueueUrl= MAIN_QUEUE_URL
+    )
+
 if __name__ == '__main__':
     #print(create_sqs_queue())
     # print(create_fifo_queue())
@@ -83,4 +88,5 @@ if __name__ == '__main__':
     # print(find_queue())
     # print(list_queues())
     # print(queue_attributes())
-    print(update_queue_attributes())
+    # print(update_queue_attributes())
+    print(delete_queue())
