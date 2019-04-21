@@ -51,8 +51,18 @@ def create_dead_letter_queue():
         }
     )
 
+def find_queue():
+    return sqs_client().list_queues(
+        QueueNamePrefix='MyTest'
+    )
+
+def list_queues():
+    return sqs_client().list_queues()
+
 if __name__ == '__main__':
     #print(create_sqs_queue())
     # print(create_fifo_queue())
     # print(create_queue_for_dead_letter())
-    print(create_dead_letter_queue())
+    # print(create_dead_letter_queue())
+    # print(find_queue())
+    print(list_queues())
