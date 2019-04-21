@@ -100,6 +100,30 @@ def send_message_to_queue():
         MessageBody='This is my first SQS Message!'
     )
 
+def send_batch_messages_to_queue():
+    return sqs_client().send_message_batch(
+
+        QueueUrl=MAIN_QUEUE_URL,
+        Entries=[
+            {
+                'Id': 'FirstMessage',
+                'MessageBody': 'This is the 1st message of batch'
+            },
+            {
+                'Id': 'SecondMessage',
+                'MessageBody': 'This is the 2nd message of batch'
+            },
+            {
+                'Id': 'ThirdMessage',
+                'MessageBody': 'This is the 3rd message of batch'
+            },
+            {
+                'Id': 'FourthMessage',
+                'MessageBody': 'This is the 4th message of batch'
+            }
+        ]
+    )
+
 
 if __name__ == '__main__':
     #print(create_sqs_queue())
@@ -111,4 +135,5 @@ if __name__ == '__main__':
     # print(queue_attributes())
     # print(update_queue_attributes())
     # print(delete_queue())
-    print(send_message_to_queue()['MessageId'])
+    # print(send_message_to_queue()['MessageId'])
+    send_batch_messages_to_queue()
