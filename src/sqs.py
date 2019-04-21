@@ -124,6 +124,12 @@ def send_batch_messages_to_queue():
         ]
     )
 
+def poll_queue_for_messages():
+    return sqs_client().receive_message(
+        QueueUrl=MAIN_QUEUE_URL,
+        MaxNumberOfMessages=10
+    )
+
 
 if __name__ == '__main__':
     #print(create_sqs_queue())
@@ -136,4 +142,5 @@ if __name__ == '__main__':
     # print(update_queue_attributes())
     # print(delete_queue())
     # print(send_message_to_queue()['MessageId'])
-    send_batch_messages_to_queue()
+    # send_batch_messages_to_queue()
+    print(poll_queue_for_messages())
