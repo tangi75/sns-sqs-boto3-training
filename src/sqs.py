@@ -8,7 +8,7 @@ FIFO_QUEUE_NAME = 'MyTestQueue.fifo'
 FIFO_QUEUE_URL = 'https://eu-west-3.queue.amazonaws.com/724579132719/MyTestQueue.fifo'
 QUEUE_FOR_DEAD_LETTER = 'Dead-Letter-Queue-for-Main'
 DEAD_LETTER_MAIN_QUEUE = 'Main-Queue'
-MAIN_QUEUE_URL = 'https://sqs.eu-west-3.amazonaws.com/724579132719/Dead-Letter-Queue-for-Main'
+MAIN_QUEUE_URL = 'https://sqs.eu-west-3.amazonaws.com/724579132719/Main-Queue'
 
 
 def sqs_client():
@@ -80,6 +80,27 @@ def delete_queue():
         QueueUrl= MAIN_QUEUE_URL
     )
 
+def send_message_to_queue():
+    return sqs_client().send_message(
+        QueueUrl=MAIN_QUEUE_URL,
+        MessageAttributes={
+            'Title': {
+                'DataType': 'String',
+                'StringValue': 'Message Title'
+            },
+            'Author': {
+                'DataType': 'String',
+                'StringValue': 'User'
+            },
+            'WeeksOn': {
+                'DataType': 'Number',
+                'StringValue': '6'
+            }
+        },
+        MessageBody='This is my first SQS Message!'
+    )
+
+
 if __name__ == '__main__':
     #print(create_sqs_queue())
     # print(create_fifo_queue())
@@ -89,4 +110,5 @@ if __name__ == '__main__':
     # print(list_queues())
     # print(queue_attributes())
     # print(update_queue_attributes())
-    print(delete_queue())
+    # print(delete_queue())
+    print(send_message_to_queue()['MessageId'])
