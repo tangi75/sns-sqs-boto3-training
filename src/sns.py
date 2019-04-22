@@ -17,5 +17,10 @@ def create_topic():
     )
 
 
+def get_topics():
+    return sns_client().list_topics()
+
+
 if __name__ == '__main__':
-    print(create_topic())
+    # print(create_topic())
+    print(get_topics())
