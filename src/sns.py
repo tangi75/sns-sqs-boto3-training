@@ -36,8 +36,15 @@ def update_topic_attributes(topic_arn):
     )
 
 
+def delete_topic(topic_arn):
+    return sns_client().delete_topic(
+        TopicArn=topic_arn
+    )
+
+
 if __name__ == '__main__':
     # print(create_topic())
     # print(get_topics())
     # print(get_topic_attributes(TOPIC_ARN))
-    update_topic_attributes(TOPIC_ARN)
+    # update_topic_attributes(TOPIC_ARN)
+    delete_topic(TOPIC_ARN)
