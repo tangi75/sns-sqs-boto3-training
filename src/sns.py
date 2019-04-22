@@ -3,6 +3,7 @@ import boto3
 
 TOPIC_NAME = 'MySubscriptionTopic'
 TOPIC_ARN = 'arn:aws:sns:eu-west-3:724579132719:MySubscriptionTopic'
+QUEUE_ARN = 'arn:aws:sqs:eu-west-3:724579132719:Main-Queue'
 
 
 def sns_client():
@@ -58,6 +59,14 @@ def create_sms_subscription(topic_arn, phone_number):
     )
 
 
+def create_sqs_queue_subscription(topic_arn, queue_arn):
+    return sns_client().subscribe(
+        TopicArn=topic_arn,
+        Protocol='sqs',
+        Endpoint=queue_arn
+    )
+
+
 if __name__ == '__main__':
     # print(create_topic())
     # print(get_topics())
@@ -65,4 +74,5 @@ if __name__ == '__main__':
     # update_topic_attributes(TOPIC_ARN)
     # delete_topic(TOPIC_ARN)
     # create_email_subscription(TOPIC_ARN, 'tangi.vass@gmail.com')
-    create_sms_subscription(TOPIC_ARN, '+33682897706')
+    # create_sms_subscription(TOPIC_ARN, '+33682897706')
+    create_sqs_queue_subscription(TOPIC_ARN, QUEUE_ARN)
