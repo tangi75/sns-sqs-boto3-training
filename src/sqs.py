@@ -130,6 +130,42 @@ def poll_queue_for_messages():
         MaxNumberOfMessages=10
     )
 
+def process_message_from_queue():
+    queued_messages = poll_queue_for_messages()
+    if 'Messages' in queued_messages and len(queued_messages['Messages']) >= 1:
+        for message in queued_messages['Messages']:
+            print("Processing message " + message['MessageId'] + " with text:" + message['Body'])
+
+            # FOR DELETING MESSAGES
+            # delete_message_from_queue(message['ReceiptHandle'])
+
+            # FOR CHANGING MESSAGE VISIBILITY TIMEOUT
+            change_message_visibility_timeout(message['ReceiptHandle'])
+
+
+def delete_message_from_queue(receipt_handle):
+    sqs_client().delete_message(
+        QueueUrl=MAIN_QUEUE_URL,
+        ReceiptHandle=receipt_handle
+    )
+    print("Deleted message from queue with receipt handle:" + receipt_handle)
+
+
+def purge_queue():
+    return sqs_client().purge_queue(
+        QueueUrl='MAIN_QUEUE_URL'
+    )
+
+
+def change_message_visibility_timeout(receipt_handle):
+    sqs_client().change_message_visibility(
+        QueueUrl=MAIN_QUEUE_URL,
+        ReceiptHandle=receipt_handle,
+        VisibilityTimeout=5
+    )
+
+    print("Changed message visibility timeout to 5 seconds")
+
 
 if __name__ == '__main__':
     #print(create_sqs_queue())
@@ -143,4 +179,5 @@ if __name__ == '__main__':
     # print(delete_queue())
     # print(send_message_to_queue()['MessageId'])
     # send_batch_messages_to_queue()
-    print(poll_queue_for_messages())
+    # print(poll_queue_for_messages())
+    process_message_from_queue()
