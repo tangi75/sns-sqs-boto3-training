@@ -116,6 +116,14 @@ def opt_in_phone_number(phone_number):
         phoneNumber=phone_number
     )
 
+
+def publish_message(topic_arn):
+    return sns_client().publish(
+        TopicArn=topic_arn,
+        Message="Hello, you're receiving this because you've subscribed!"
+    )
+
+
 if __name__ == '__main__':
     # print(create_topic())
     # print(get_topics())
@@ -129,6 +137,7 @@ if __name__ == '__main__':
     # print(list_all_subscriptions())
     # print(check_if_phone_number_opted_out('+33682897706'))
     # print(list_opted_out_phone_numbers())
-    opt_out_of_email_subscription('tangi.vass@gmail.com')
+    # opt_out_of_email_subscription('tangi.vass@gmail.com')
     # opt_out_of_sms_subscription('+33682897706')
     # opt_in_phone_number('+33682897706')
+    publish_message(TOPIC_ARN)
