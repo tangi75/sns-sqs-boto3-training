@@ -42,9 +42,18 @@ def delete_topic(topic_arn):
     )
 
 
+def create_email_subscription(topic_arn, email_address):
+    return sns_client().subscribe(
+        TopicArn=topic_arn,
+        Protocol='email',
+        Endpoint=email_address
+    )
+
+
 if __name__ == '__main__':
-    # print(create_topic())
+    print(create_topic())
     # print(get_topics())
     # print(get_topic_attributes(TOPIC_ARN))
     # update_topic_attributes(TOPIC_ARN)
-    delete_topic(TOPIC_ARN)
+    # delete_topic(TOPIC_ARN)
+    create_email_subscription(TOPIC_ARN, 'tangi.vass@gmail.com')
