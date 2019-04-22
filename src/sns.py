@@ -2,6 +2,7 @@ import boto3
 
 
 TOPIC_NAME = 'MySubscriptionTopic'
+TOPIC_ARN = 'arn:aws:sns:eu-west-3:724579132719:MySubscriptionTopic'
 
 
 def sns_client():
@@ -21,6 +22,13 @@ def get_topics():
     return sns_client().list_topics()
 
 
+def get_topic_attributes(topic_arn):
+    return sns_client().get_topic_attributes(
+        TopicArn=topic_arn
+    )
+
+
 if __name__ == '__main__':
     # print(create_topic())
-    print(get_topics())
+    # print(get_topics())
+    print(get_topic_attributes(TOPIC_ARN))
