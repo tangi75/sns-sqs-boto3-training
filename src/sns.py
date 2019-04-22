@@ -50,10 +50,19 @@ def create_email_subscription(topic_arn, email_address):
     )
 
 
+def create_sms_subscription(topic_arn, phone_number):
+    return sns_client().subscribe(
+        TopicArn=topic_arn,
+        Protocol='sms',
+        Endpoint=phone_number
+    )
+
+
 if __name__ == '__main__':
-    print(create_topic())
+    # print(create_topic())
     # print(get_topics())
     # print(get_topic_attributes(TOPIC_ARN))
     # update_topic_attributes(TOPIC_ARN)
     # delete_topic(TOPIC_ARN)
-    create_email_subscription(TOPIC_ARN, 'tangi.vass@gmail.com')
+    # create_email_subscription(TOPIC_ARN, 'tangi.vass@gmail.com')
+    create_sms_subscription(TOPIC_ARN, '+33682897706')
