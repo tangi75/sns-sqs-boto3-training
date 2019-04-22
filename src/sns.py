@@ -28,7 +28,16 @@ def get_topic_attributes(topic_arn):
     )
 
 
+def update_topic_attributes(topic_arn):
+    return sns_client().set_topic_attributes(
+        TopicArn=topic_arn,
+        AttributeName='DisplayName',
+        AttributeValue=TOPIC_NAME + '-UPDATED'
+    )
+
+
 if __name__ == '__main__':
     # print(create_topic())
     # print(get_topics())
-    print(get_topic_attributes(TOPIC_ARN))
+    # print(get_topic_attributes(TOPIC_ARN))
+    update_topic_attributes(TOPIC_ARN)
