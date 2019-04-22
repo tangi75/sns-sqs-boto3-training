@@ -77,6 +77,12 @@ def list_all_subscriptions():
     return sns_client().list_subscriptions()
 
 
+def check_if_phone_number_opted_out(phone_number):
+    return sns_client().check_if_phone_number_is_opted_out(
+        phoneNumber=phone_number
+    )
+
+
 if __name__ == '__main__':
     # print(create_topic())
     # print(get_topics())
@@ -86,5 +92,6 @@ if __name__ == '__main__':
     # create_email_subscription(TOPIC_ARN, 'tangi.vass@gmail.com')
     # create_sms_subscription(TOPIC_ARN, '+33682897706')
     # create_sqs_queue_subscription(TOPIC_ARN, QUEUE_ARN)
-    print(get_topic_subscriptions(TOPIC_ARN))
-    print(list_all_subscriptions())
+    # print(get_topic_subscriptions(TOPIC_ARN))
+    # print(list_all_subscriptions())
+    print(check_if_phone_number_opted_out('+33682897706'))
