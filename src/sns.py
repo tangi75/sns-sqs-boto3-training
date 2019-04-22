@@ -83,6 +83,39 @@ def check_if_phone_number_opted_out(phone_number):
     )
 
 
+def list_opted_out_phone_numbers():
+    return sns_client().list_phone_numbers_opted_out()
+
+
+def opt_out_of_email_subscription(email_address):
+    subscriptions = get_topic_subscriptions(TOPIC_ARN)
+    for subscription in subscriptions['Subscriptions']:
+        if subscription['Protocol'] == 'email' and subscription['Endpoint'] == email_address:
+            print("Unsubscribing " + subscription['Endpoint'])
+            subscription_arn = subscription['SubscriptionArn']
+            sns_client().unsubscribe(
+                SubscriptionArn=subscription_arn
+            )
+            print("Unsubscribed " + subscription['Endpoint'])
+
+
+def opt_out_of_sms_subscription(phone_number):
+    subscriptions = get_topic_subscriptions(TOPIC_ARN)
+    for subscription in subscriptions['Subscriptions']:
+        if subscription['Protocol'] == 'sms' and subscription['Endpoint'] == phone_number:
+            print("Unsubscribing " + subscription['Endpoint'])
+            subscription_arn = subscription['SubscriptionArn']
+            sns_client().unsubscribe(
+                SubscriptionArn=subscription_arn
+            )
+            print("Unsubscribed " + subscription['Endpoint'])
+
+
+def opt_in_phone_number(phone_number):
+    return sns_client().opt_in_phone_number(
+        phoneNumber=phone_number
+    )
+
 if __name__ == '__main__':
     # print(create_topic())
     # print(get_topics())
@@ -94,4 +127,8 @@ if __name__ == '__main__':
     # create_sqs_queue_subscription(TOPIC_ARN, QUEUE_ARN)
     # print(get_topic_subscriptions(TOPIC_ARN))
     # print(list_all_subscriptions())
-    print(check_if_phone_number_opted_out('+33682897706'))
+    # print(check_if_phone_number_opted_out('+33682897706'))
+    # print(list_opted_out_phone_numbers())
+    opt_out_of_email_subscription('tangi.vass@gmail.com')
+    # opt_out_of_sms_subscription('+33682897706')
+    # opt_in_phone_number('+33682897706')
